@@ -801,8 +801,36 @@ function CustomTextInput() {
         </div>
     );
 }
+
+//对父组件暴露DOM节点
+function CustomInput(props) {
+    return (
+        <div>
+            <input ref={ props.inputRef }/>
+        </div>
+    );
+}
+function Parent(props) {
+    return (
+        <div>
+            my input: <CustomInput inputRef={props.inputRef}/>
+        </div>
+    )
+}
+
+class GrandParent extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    componentDidMount(){
+        this.inputElement.focus();
+    }
+    render(){
+        return <Parent inputRef={el => this.inputElement = el}/>
+    }
+}
 ReactDOM.render(
-    <CustomTextInput/>,
+    <GrandParent/>,
     document.getElementById('ref')
 )
 registerServiceWorker();
