@@ -758,36 +758,51 @@ ReactDOM.render(
     document.getElementById('entry-jsx')
 )
 //给DOM添加Ref
-class CustomTextInput extends React.Component {
-    constructor(props) {
-        super(props);
-        this.focus = this.focus.bind(this);
-    }
-    focus() {
-        this.textInput.focus();
-    }
-    render(){
-        return (
-            <div>
-                <input ref={input => this.textInput = input}/>
-                <button type='submit' value='Focus Input' onClick={this.focus}>
-                    Focus!
-                </button>
-            </div>
-        );
-    }
-}
+// class CustomTextInput extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.focus = this.focus.bind(this);
+//     }
+//     focus() {
+//         this.textInput.focus();
+//     }
+//     render(){
+//         return (
+//             <div>
+//                 <input ref={input => this.textInput = input}/>
+//                 <button type='submit' value='Focus Input' onClick={this.focus}>
+//                     Focus!
+//                 </button>
+//             </div>
+//         );
+//     }
+// }
 //给类组件添加ref
-class AutoFocusTextInput extends React.Component{
-    componentDidMount(){
-        this.textInput.focus();
+// class AutoFocusTextInput extends React.Component{
+//     componentDidMount(){
+//         this.textInput.focus();
+//     }
+//     render(){
+//         return <CustomTextInput ref={element => this.textInput = element}/>
+//     }
+// }
+
+//refs与函数式组件
+    //不能直接在函数式组件上使用ref,因为函数式组件没有实例，但是可以在函数式组件的内部去使用它，只要它指向一个dom或者一个class组件
+function CustomTextInput() {
+    let textInput = null;
+    function focus() {
+        textInput.focus();
     }
-    render(){
-        return <CustomTextInput ref={element => this.textInput = element}/>
-    }
+    return (
+        <div>
+            <input type='text' ref={input => textInput = input}/>
+            <button type='submit' onClick={focus}>Focus!</button>
+        </div>
+    );
 }
 ReactDOM.render(
-    <AutoFocusTextInput/>,
+    <CustomTextInput/>,
     document.getElementById('ref')
 )
 registerServiceWorker();
