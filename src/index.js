@@ -779,10 +779,15 @@ class CustomTextInput extends React.Component {
 }
 //给类组件添加ref
 class AutoFocusTextInput extends React.Component{
-
+    componentDidMount(){
+        this.textInput.focus();
+    }
+    render(){
+        return <CustomTextInput ref={element => this.textInput = element}/>
+    }
 }
 ReactDOM.render(
-    <CustomTextInput/>,
+    <AutoFocusTextInput/>,
     document.getElementById('ref')
 )
 registerServiceWorker();
